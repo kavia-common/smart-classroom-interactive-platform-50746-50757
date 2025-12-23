@@ -1,104 +1,334 @@
-/* CSS Variables for Theme Management */
+/* Neon Fun (Smart TV) Theme + TV-first layout */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  /* Neon Fun palette (provided) */
+  --color-primary: #10B981;
+  --color-secondary: #F59E0B;
+  --color-success: #10B981;
+  --color-error: #EF4444;
+
+  --color-bg: #f9fafb;
+  --color-surface: #ffffff;
+  --color-text: #111827;
+
+  /* TV-first sizing (can be adjusted from Accessibility Settings) */
+  --tv-font-scale: 1;
+  --tv-radius: 18px;
+
+  --shadow-soft: 0 10px 30px rgba(17, 24, 39, 0.08);
+  --shadow-focus: 0 0 0 4px rgba(16, 185, 129, 0.45), 0 0 0 9px rgba(245, 158, 11, 0.22);
+
+  /* Derived */
+  --border-color: rgba(17, 24, 39, 0.12);
+  --muted-text: rgba(17, 24, 39, 0.7);
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+/* Contrast modes for Accessibility Settings */
+[data-contrast="high"] {
+  --color-bg: #0b1020;
+  --color-surface: #0f172a;
+  --color-text: #ffffff;
+  --border-color: rgba(255, 255, 255, 0.22);
+  --muted-text: rgba(255, 255, 255, 0.72);
+  --shadow-soft: 0 12px 34px rgba(0, 0, 0, 0.55);
+  --shadow-focus: 0 0 0 5px rgba(16, 185, 129, 0.65), 0 0 0 11px rgba(245, 158, 11, 0.35);
 }
 
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+* {
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html,
+body,
+#root {
+  height: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  margin: 0;
+  background: radial-gradient(1200px 700px at 15% 0%, rgba(16, 185, 129, 0.12), transparent 60%),
+    radial-gradient(900px 600px at 95% 10%, rgba(245, 158, 11, 0.10), transparent 55%),
+    var(--color-bg);
+  color: var(--color-text);
 }
 
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+a {
+  color: inherit;
+}
+
+.tv-app {
+  min-height: 100%;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Ubuntu, Cantarell, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji",
+    "Segoe UI Emoji";
+  font-size: calc(16px * var(--tv-font-scale));
+}
+
+.tv-title {
+  font-size: calc(42px * var(--tv-font-scale));
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px 0;
+}
+
+.tv-subtitle {
+  margin: 0;
+  font-size: calc(20px * var(--tv-font-scale));
+  color: var(--muted-text);
+}
+
+.tv-kicker {
+  font-size: calc(14px * var(--tv-font-scale));
+  color: var(--muted-text);
+}
+
+.tv-container {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 26px 22px;
+}
+
+/* Layout */
+.tv-header {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 22px;
+  background: rgba(255, 255, 255, 0.7);
+  border-bottom: 1px solid var(--border-color);
+  backdrop-filter: blur(10px);
+}
+
+[data-contrast="high"] .tv-header {
+  background: rgba(15, 23, 42, 0.75);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tv-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.tv-brand h1 {
+  font-size: calc(22px * var(--tv-font-scale));
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.tv-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--color-surface);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+  font-size: calc(13px * var(--tv-font-scale));
+}
+
+.tv-content {
+  padding: 18px 0 34px 0;
+}
+
+/* Cards */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--tv-radius);
+  box-shadow: var(--shadow-soft);
+}
+
+.card-inner {
+  padding: 18px;
+}
+
+.card-title {
+  margin: 0 0 10px 0;
+  font-size: calc(22px * var(--tv-font-scale));
+}
+
+.card-desc {
+  margin: 0;
+  color: var(--muted-text);
+  font-size: calc(16px * var(--tv-font-scale));
+}
+
+/* Buttons / focusables */
+.focusable {
+  outline: none;
+}
+
+.focusable:focus-visible {
+  box-shadow: var(--shadow-focus);
+}
+
+.btn {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
-}
-
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
-}
-
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+  gap: 10px;
+  border: 0;
+  border-radius: 16px;
+  padding: 16px 18px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--border-color);
+  font-size: calc(18px * var(--tv-font-scale));
+  min-height: 60px;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.btn-primary {
+  background: linear-gradient(180deg, rgba(16, 185, 129, 1), rgba(16, 185, 129, 0.88));
+  color: #052016;
+  border: 1px solid rgba(5, 32, 22, 0.10);
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+.btn-secondary {
+  background: linear-gradient(180deg, rgba(245, 158, 11, 1), rgba(245, 158, 11, 0.90));
+  color: #2b1800;
+  border: 1px solid rgba(43, 24, 0, 0.12);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.btn-danger {
+  background: linear-gradient(180deg, rgba(239, 68, 68, 1), rgba(239, 68, 68, 0.90));
+  color: #290202;
+  border: 1px solid rgba(41, 2, 2, 0.12);
+}
+
+.btn-ghost {
+  background: transparent;
+}
+
+.btn-full {
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* Form */
+.field {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.label {
+  font-size: calc(15px * var(--tv-font-scale));
+  color: var(--muted-text);
+}
+
+.input {
+  border: 1px solid var(--border-color);
+  background: var(--color-surface);
+  border-radius: 16px;
+  padding: 14px 16px;
+  font-size: calc(18px * var(--tv-font-scale));
+  min-height: 56px;
+  color: var(--color-text);
+}
+
+.input:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+.helper {
+  margin: 0;
+  color: var(--muted-text);
+  font-size: calc(14px * var(--tv-font-scale));
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  z-index: 50;
+}
+
+.modal {
+  width: min(920px, 96vw);
+  background: var(--color-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 22px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.30);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-body {
+  padding: 18px;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: calc(22px * var(--tv-font-scale));
+}
+
+/* Status */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: rgba(16, 185, 129, 0.10);
+  font-weight: 800;
+  font-size: calc(14px * var(--tv-font-scale));
+}
+
+.badge-warn {
+  background: rgba(245, 158, 11, 0.14);
+}
+
+.badge-danger {
+  background: rgba(239, 68, 68, 0.14);
+}
+
+.hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 18px 0;
+}
+
+/* Responsive for large displays and safe interaction distance */
+@media (max-width: 980px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+  .tv-title {
+    font-size: calc(34px * var(--tv-font-scale));
   }
 }
